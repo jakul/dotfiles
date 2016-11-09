@@ -1,0 +1,20 @@
+authtoken: 49Nt9phj1csp5osB3F2RN_7YGUquLLvZAwKy4W8dPa1
+tunnels:
+  mongodb_2:
+    proto: tcp
+    addr: 27018
+  mongodb_3:
+    proto: tcp
+    addr: 27017
+  platform:
+    proto: http
+    addr: 5000
+    bind_tls: false
+  boughtbymany:
+    proto: http
+    addr: 8000
+    bind_tls: false
+  accounts:
+    proto: http
+    addr: 5004
+    bind_tls: false

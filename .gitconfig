@@ -1,0 +1,13 @@
+[user]
+	name = Craig Blaszczyk
+	email = masterjakul@gmail.com
+[push]
+	default = simple
+[color]
+	ui = auto
+[branch]
+	autosetupmerge = true
+[rerere]
+	enabled = true
+[core]
+	excludesfile = ~/.gitignore
