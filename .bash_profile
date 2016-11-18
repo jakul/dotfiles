@@ -49,3 +49,6 @@ export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # Enable autocompeltion for fabric commands
 . ~/.fabric_completion.bash
+
+# Work on quotebuy code
+alias wquotebuy="cd ~/src/boughtbymany/quotebuy"
