@@ -7,6 +7,7 @@ SYMLINKS=(
     ".fabric_completion.bash"
     ".gitignore"
     ".ngrok2"
+    ".iterm2"
 )
 COPY=(
     ".gitconfig"
