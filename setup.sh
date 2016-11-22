@@ -8,6 +8,7 @@ SYMLINKS=(
     ".gitignore"
     ".ngrok2"
     ".iterm2"
+    ".config"
 )
 COPY=(
     ".gitconfig"

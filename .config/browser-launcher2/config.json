@@ -1,0 +1,19 @@
+{
+  "browsers": [
+    {
+      "name": "chrome",
+      "re": {},
+      "type": "chrome",
+      "profile": "/Users/craig/.config/browser-launcher2/chrome-50.0.2661.86_7da7d3cb",
+      "command": "/Applications/Google Chrome.app",
+      "version": "50.0.2661.86"
+    },
+    {
+      "name": "safari",
+      "type": "safari",
+      "profile": false,
+      "command": "/Applications/Safari.app",
+      "version": "9.0.3"
+    }
+  ]
+}
