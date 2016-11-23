@@ -10,6 +10,7 @@ SYMLINKS=(
     ".iterm2"
     ".config"
     ".atom"
+    ".aws"
 )
 COPY=(
     ".gitconfig"

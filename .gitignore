@@ -3,3 +3,4 @@ settings/local_settings.py
 .config/browser-launcher2/chrome*
 .atom/.apm/
 .atom/packages/
+.aws/credentials
