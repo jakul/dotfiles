@@ -9,6 +9,7 @@ SYMLINKS=(
     ".ngrok2"
     ".iterm2"
     ".config"
+    ".atom"
 )
 COPY=(
     ".gitconfig"

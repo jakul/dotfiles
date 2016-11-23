@@ -1,3 +1,5 @@
 settings/local_settings.py
 .idea/
-.config/browser-launcher2/chrome
+.config/browser-launcher2/chrome*
+.atom/.apm/
+.atom/packages/

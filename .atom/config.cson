@@ -1,0 +1,13 @@
+"*":
+  "atom-beautify":
+    general:
+      _analyticsUserId: "680ebd0e-3683-4757-b1fa-d528580926fe"
+  core:
+    telemetryConsent: "limited"
+  editor:
+    fontSize: 11
+    invisibles: {}
+  "exception-reporting":
+    userId: "9d76f526-e5a5-0e57-3290-1dd24a25021a"
+  welcome:
+    showOnStartup: false
