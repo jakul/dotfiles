@@ -12,6 +12,7 @@ SYMLINKS=(
     ".atom"
     ".aws"
     ".virtualenvhooks"
+    "redis.conf"
 )
 COPY=(
     ".gitconfig"

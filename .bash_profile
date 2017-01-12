@@ -1,3 +1,5 @@
+export PATH=/usr/local/bin:$PATH
+
 export VIRTUALENVWRAPPER_PYTHON=`which python3`
 export VIRTUALENVWRAPPER_HOOK_DIR=~/.virtualenvhooks
 export WORKON_HOME=$HOME/.virtualenvs
@@ -15,7 +17,7 @@ export WERKZEUG_DEBUG_PIN=off
 
 # Run stuff for the platform
 # The mongo 2 is sent to the background manually because the "fork" config option doesn't work on Max OS Sierra
-alias rboughtbymany="redis-server /etc/redis.conf && pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start" 
+alias rboughtbymany="redis-server ~/redis.conf && pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start" 
 alias rmongo3="mongod --config /etc/mongo_3.conf" 
 alias rmongo2="/usr/local/Cellar/mongodb26/2.6.11/bin/mongod --config /etc/mongo_26.conf &"
 alias rngrok="ngrok start --all"
@@ -53,3 +55,11 @@ export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # Work on quotebuy code
 alias wquotebuy="cd ~/src/boughtbymany/quotebuy"
+
+# Set the flags needed to use the brew version of OpenSSL
+# https://github.com/phusion/passenger/issues/1630#issuecomment-147527656
+export EXTRA_LDFLAGS="-L$(brew --prefix openssl)/lib"
+export EXTRA_CFLAGS="-I$(brew --prefix openssl)/include" 
+# http://stackoverflow.com/a/40206994/691427
+export LDFLAGS="-L$(brew --prefix openssl)/lib"
+export CFLAGS="-I$(brew --prefix openssl)/include" 
