@@ -9,6 +9,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 # Make Flask debugging easier
 export WERKZEUG_DEBUG_PIN=off
 
+export NPM_TOKEN=7ebe8ae0-83ff-4b87-9ca2-933c6e09b2a0
 
 #alias wapp="cd ~/src/boughtbymany/app && source ~/.virtualenvs/app/bin/activate"
 #alias wplatform="cd ~/src/boughtbymany/platform && source ~/.virtualenvs/platform/bin/activate"
@@ -62,4 +63,15 @@ export EXTRA_LDFLAGS="-L$(brew --prefix openssl)/lib"
 export EXTRA_CFLAGS="-I$(brew --prefix openssl)/include" 
 # http://stackoverflow.com/a/40206994/691427
 export LDFLAGS="-L$(brew --prefix openssl)/lib"
-export CFLAGS="-I$(brew --prefix openssl)/include" 
+export CFLAGS="-I$(brew --prefix openssl)/include"
+export PKG_CONFIG_PATH="-I$(brew --prefix openssl)/lib/pkgconfig"
+
+alias wknhere="workon $(basename `pwd`)"
+export PATH="$HOME/.yarn/bin:$PATH"
+
+export LC_ALL=en_GB.UTF-8
+export LANG=en_GB.UTF-8
+
+
+# Make generating new uuids easier
+alias uuid="python -c \"import uuid; print(uuid.uuid4())\""

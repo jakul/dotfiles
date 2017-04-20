@@ -4,3 +4,5 @@ settings/local_settings.py
 .atom/.apm/
 .atom/packages/
 .aws/credentials
+.config/robomongo/
+.config/pudb/
