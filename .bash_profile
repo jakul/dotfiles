@@ -1,4 +1,4 @@
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/opt/openssl/bin:/usr/local/bin:$PATH
 
 export VIRTUALENVWRAPPER_PYTHON=`which python3`
 export VIRTUALENVWRAPPER_HOOK_DIR=~/.virtualenvhooks
@@ -64,6 +64,7 @@ export EXTRA_CFLAGS="-I$(brew --prefix openssl)/include"
 # http://stackoverflow.com/a/40206994/691427
 export LDFLAGS="-L$(brew --prefix openssl)/lib"
 export CFLAGS="-I$(brew --prefix openssl)/include"
+export CPPFLAGS="-I$(brew --prefix openssl)/include"
 export PKG_CONFIG_PATH="-I$(brew --prefix openssl)/lib/pkgconfig"
 
 alias wknhere="workon $(basename `pwd`)"
@@ -75,3 +76,10 @@ export LANG=en_GB.UTF-8
 
 # Make generating new uuids easier
 alias uuid="python -c \"import uuid; print(uuid.uuid4())\""
+
+# Setup nvm
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
+
+# Allow ipdb inside of pytest
+export PYTEST_ADDOPTS="--capture=no"
