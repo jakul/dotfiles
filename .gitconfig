@@ -1,6 +1,5 @@
 [user]
 	name = Craig Blaszczyk
-	email = masterjakul@gmail.com
 [push]
 	default = simple
 [color]
@@ -11,3 +10,4 @@
 	enabled = true
 [core]
 	excludesfile = ~/.gitignore
+	editor = vim

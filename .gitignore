@@ -1,4 +1,5 @@
 settings/local_settings.py
+secure_settings*.env
 .idea/
 .config/browser-launcher2/chrome*
 .atom/.apm/
@@ -6,3 +7,4 @@ settings/local_settings.py
 .aws/credentials
 .config/robomongo/
 .config/pudb/
+scratch*
