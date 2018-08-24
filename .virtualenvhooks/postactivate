@@ -1,8 +1,8 @@
 #!/bin/bash
 # This hook is sourced after every virtualenv is activated.
 
-PROJECT_NAME=$(basename $VIRTUAL_ENV)
-if [ "$PROJECT_NAME" == "platform-fabric" ]; then
-        PROJECT_NAME='platform'
-fi
-cd ~/src/boughtbymany/$PROJECT_NAME
+#PROJECT_NAME=$(basename $VIRTUAL_ENV)
+#if [ "$PROJECT_NAME" == "platform-fabric" ]; then
+#        PROJECT_NAME='platform'
+#fi
+#cd ~/src/boughtbymany/$PROJECT_NAME

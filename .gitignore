@@ -8,3 +8,7 @@ secure_settings*.env
 .config/robomongo/
 .config/pudb/
 scratch*
+.build/
+node_modules/
+pytest_cache/
+*.egg-info/

@@ -1,6 +1,6 @@
 cd ~/src/boughtbymany/
 
-export PATH=/Users/craig/.local/bin:/usr/local/opt/openssl/bin:/usr/local/bin:$PATH
+export PATH=/Users/craig/.local/bin:/Users/craig/.pyenv/shims:/usr/local/opt/openssl/bin:/usr/local/bin:$PATH
 
 export VIRTUALENVWRAPPER_PYTHON=`which python3`
 export VIRTUALENVWRAPPER_HOOK_DIR=~/.virtualenvhooks
@@ -79,15 +79,24 @@ export NVM_DIR="$HOME/.nvm"
 
 # Allow ipdb inside of pytest
 export PYTEST_ADDOPTS="--capture=no"
+#export PYTEST_ADDOPTS="--capture=no --pdbcls=IPython.terminal.debugger:Pdb"
 alias ttox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" tox"
 alias ptox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" PIPENV_DONT_LOAD_ENV=TRUE pipenv run tox"
+export TOX_PLUGINS_IPDB_INSTALL=1
+
 
 # General helper
 alias ww="workon wrench"
-alias wlt="AWS_DEFAULT_PROFILE=bbm-dev wrench logs tail"
+alias wlt="AWS_DEFAULT_PROFILE=bbm-dev wrench logs tail --format servicekit"
+alias wdt="wrench deploy trantor"
 alias pipr="pip install -r requirements.txt"
 alias pips="pip install ipython ipdb tox pre-commit bbm-wrench && pre-commit install"
 alias gitconfbbm="git config user.email craig@boughtbymany.com"
+alias pri="pipenv run ipython"
+alias prun="pipenv run python run.py"
+alias rmpipcache="rm -r ~/Library/Caches/pip*"
+export BBM_DEV="BBM Dev"
+export BBM_PROD="Bought By Many (Prod)"
 
 # Enable bash completion for pipenv
 eval "$(pipenv --completion)"
@@ -96,3 +105,9 @@ eval "$(pipenv --completion)"
 export CROSS_ACCOUNT_STACK_AWS_PROFILE_NAME_BBM_MASTER=bbm-master-full-access
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Let Pipenv use Pyenv
+eval "$(pyenv init -)"
+export PYENV_SHELL=bash
+
+
