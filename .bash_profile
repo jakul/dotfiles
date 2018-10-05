@@ -23,7 +23,7 @@ alias rmongo2="/usr/local/Cellar/mongodb26/2.6.11/bin/mongod --config /etc/mongo
 alias rngrok="ngrok start --all"
 
 # Set prompt to show virtualenv
-. ~/.bash_prompt
+source ~/.bash_prompt
 
 # Make it easier to fix when pdb goes wrong
 alias rr="reset && reset"
@@ -78,8 +78,8 @@ export NVM_DIR="$HOME/.nvm"
 . /usr/local/opt/nvm/nvm.sh --no-use
 
 # Allow ipdb inside of pytest
-export PYTEST_ADDOPTS="--capture=no"
-#export PYTEST_ADDOPTS="--capture=no --pdbcls=IPython.terminal.debugger:Pdb"
+#export PYTEST_ADDOPTS="--capture=no"
+export PYTEST_ADDOPTS="--capture=no --pdbcls=IPython.terminal.debugger:Pdb"
 alias ttox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" tox"
 alias ptox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" PIPENV_DONT_LOAD_ENV=TRUE pipenv run tox"
 export TOX_PLUGINS_IPDB_INSTALL=1
@@ -89,6 +89,8 @@ export TOX_PLUGINS_IPDB_INSTALL=1
 alias ww="workon wrench"
 alias wlt="AWS_DEFAULT_PROFILE=bbm-dev wrench logs tail --format servicekit"
 alias wdt="wrench deploy trantor"
+alias wt="wrench trantor"
+alias wtgs="wrench trantor get_squad"
 alias pipr="pip install -r requirements.txt"
 alias pips="pip install ipython ipdb tox pre-commit bbm-wrench && pre-commit install"
 alias gitconfbbm="git config user.email craig@boughtbymany.com"
