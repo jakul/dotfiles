@@ -11,8 +11,6 @@ source /usr/local/bin/virtualenvwrapper.sh
 # Make Flask debugging easier
 export WERKZEUG_DEBUG_PIN=off
 
-export NPM_TOKEN=7ebe8ae0-83ff-4b87-9ca2-933c6e09b2a0
-
 alias cdb="cd ~/src/boughtbymany"
 
 # Run stuff for the platform
@@ -112,4 +110,8 @@ export CROSS_ACCOUNT_STACK_AWS_PROFILE_NAME_BBM_MASTER=bbm-master-full-access
 eval "$(pyenv init -)"
 export PYENV_SHELL=bash
 
+# List the preferred python versions
+export PYENV_VERSION=system:3.6.6
+#export PYENV_VERSION=system:3.6.6:3.7.1
 
+[[ -s "$HOME/.bash_credentials" ]] && source "$HOME/.bash_credentials"
