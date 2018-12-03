@@ -16,7 +16,7 @@ alias cdb="cd ~/src/boughtbymany"
 # Run stuff for the platform
 # The mongo 2 is sent to the background manually because the "fork" config option doesn't work on Max OS Sierra
 alias rboughtbymany="redis-server ~/redis.conf && pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start" 
-alias rmongo3="mongod --config /etc/mongo_3.conf" 
+alias rmongo3="mongod --config ~/.mongo_3.conf" 
 alias rmongo2="/usr/local/Cellar/mongodb26/2.6.11/bin/mongod --config /etc/mongo_26.conf &"
 alias rngrok="ngrok start --all"
 

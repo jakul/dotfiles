@@ -13,6 +13,7 @@ SYMLINKS=(
     ".aws"
     ".virtualenvhooks"
     "redis.conf"
+    ".mongo_3.conf"
 )
 COPY=(
     ".gitconfig"
