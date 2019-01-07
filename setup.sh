@@ -14,6 +14,7 @@ SYMLINKS=(
     ".virtualenvhooks"
     "redis.conf"
     ".mongo_3.conf"
+    ".vimrc"
 )
 COPY=(
     ".gitconfig"
