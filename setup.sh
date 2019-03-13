@@ -2,6 +2,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SYMLINKS=(
     ".bash_profile"
+    ".bashrc"
     ".bash_prompt"
     ".django_bash_completion"
     ".fabric_completion.bash"
@@ -15,6 +16,8 @@ SYMLINKS=(
     "redis.conf"
     ".mongo_3.conf"
     ".vimrc"
+    ".zshrc"
+    ".zsh_aliases"
 )
 COPY=(
     ".gitconfig"

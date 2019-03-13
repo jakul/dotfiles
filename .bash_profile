@@ -22,9 +22,6 @@ alias rboughtbymany="redis-server ~/redis.conf && pg_ctl -D /usr/local/var/postg
 alias rmongo3="mongod --config ~/.mongo_3.conf" 
 alias rngrok="ngrok start --all"
 
-# Set prompt to show virtualenv
-source ~/.bash_prompt
-
 # Make it easier to fix when pdb goes wrong
 alias rr="reset && reset"
 
@@ -79,7 +76,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # Allow ipdb inside of pytest
 #export PYTEST_ADDOPTS="--capture=no"
-export PYTEST_ADDOPTS="--capture=no --pdbcls=IPython.terminal.debugger:Pdb"
+export PYTEST_ADDOPTS="--capture=no --pdbcls=IPython.terminal.debugger:Pdb -W ignore:\"The \`color_scheme\` argument is deprecated since version 5.1\" "
 alias ttox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" tox"
 alias ptox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" PIPENV_DONT_LOAD_ENV=TRUE pipenv run tox"
 export TOX_PLUGINS_IPDB_INSTALL=1
@@ -90,6 +87,8 @@ alias ww="workon wrench-pD-E6Kyi"
 alias wlt="AWS_DEFAULT_PROFILE=bbm-dev wrench logs tail --format servicekit"
 alias wdt="wrench deploy trantor"
 alias wt="wrench trantor"
+alias wtl="wrench trantor lambda"
+alias wtld="wrench trantor latest_deploys"
 alias wtgs="wrench trantor get_squad"
 alias pipr="pip install -r requirements.txt"
 alias pips="pip install ipython ipdb tox pre-commit bbm-wrench && pre-commit install"
@@ -99,6 +98,7 @@ alias prpc="pipenv run pre-commit install && pipenv run pre-commit run"
 alias prdi="pipenv install --dev --python `which python3.6` && prpc"
 alias prun="pipenv run python run.py"
 alias rmpipcache="rm -r ~/Library/Caches/pip*"
+alias suc="cd ~/src/boughtbymany/swagger-ui-cimpress && nvm use 7.7.4 && yarn run serve"
 export BBM_DEV="BBM Dev"
 export BBM_PROD="Bought By Many (Prod)"
 
@@ -122,3 +122,19 @@ if type brew 2&>/dev/null; then
     source "$completion_file"
   done
 fi
+
+# Colourise the terminal when using the deployment profile
+# From https://gist.github.com/pablete/5871811
+function set_iterm_profile() {
+  NAME=$1; if [ -z "$NAME" ]; then NAME="Default"; fi # if you have trouble with this, change
+                                                      # "Default" to the name of your default theme
+  echo -e "\033]50;SetProfile=$NAME\a"
+}
+alias deployment="export AWS_DEFAULT_PROFILE=deployment && set_iterm_profile deployment"
+alias undeployment="unset AWS_DEFAULT_PROFILE && set_iterm_profile"
+alias trantor_dev="export TRANTOR_API_URL=https://trantor-dev.boughtbymany.com && export TRANTOR_PROFILE=trantor-dev && export CODE_BUCKET=code-bucket-trantor-dev"
+alias untrantor_dev="unset TRANTOR_API_URL && unset TRANTOR_PROFILE && unset CODE_BUCKET"
+# Set prompt to show virtualenv
+source ~/.bash_prompt
+
+alias now="date -u +\"%Y-%m-%dT%H:%M:%SZ\""
