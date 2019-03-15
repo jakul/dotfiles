@@ -40,7 +40,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -64,15 +64,29 @@ HIST_STAMPS="dd/mm/yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-completions)
-#autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
+
+# https://gist.github.com/ctechols/ca1035271ad134841284#gistcomment-2788113
+
+# Perform compinit only once a day.
+autoload -Uz compinit
+
+setopt EXTENDEDGLOB
+for dump in $ZSH_COMPDUMP(#qN.m1); do
+  compinit
+  if [[ -s "$dump" && (! -s "$dump.zwc" || "$dump" -nt "$dump.zwc") ]]; then
+    zcompile "$dump"
+  fi
+  echo "Initializing Completions..."
+done
+unsetopt EXTENDEDGLOB
+compinit -C
+
 
 # User configuration
 
 # Load aliases
-[[ -s "$HOME/.zsh_aliases" ]] && source "$HOME/.zsh_aliases"
-
 export PATH=/$HOME/.yarn/bin:/Users/craig/.local/bin:/Users/craig/.pyenv/shims:/usr/local/opt/openssl/bin:/usr/local/bin:$PATH
 
 # Setup Python tooling
@@ -81,32 +95,27 @@ export VIRTUALENVWRAPPER_PYTHON=`which python3`
 export VIRTUALENVWRAPPER_HOOK_DIR=~/.virtualenvhooks
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-source /usr/local/bin/virtualenvwrapper_lazy.sh
 
-# Enable bash completion for pipenv
-# eval "$(pipenv --completion)"
+# Use sandbox to lazy load shell completions
+source ~/.sandboxd
 
 # Let Pipenv use Pyenv
-eval "$(pyenv init -)"
 export PYENV_SHELL=zsh
 
 # Make Flask debugging easier
 export WERKZEUG_DEBUG_PIN=off
 
 # Allow ipdb inside of pytest
-#export PYTEST_ADDOPTS="--capture=no"
 export PYTEST_ADDOPTS="--capture=no --pdbcls=IPython.terminal.debugger:Pdb -W ignore:\"The \`color_scheme\` argument is deprecated since version 5.1\" "
 export TOX_PLUGINS_IPDB_INSTALL=1
 
 
-# Setup Node tooling
 # Setup nvm
 export NVM_DIR="$HOME/.nvm"
-. /usr/local/opt/nvm/nvm.sh --no-use
 
 # System setup
 [[ -s "$HOME/.bash_credentials" ]] && source "$HOME/.bash_credentials"
+
 # Set the flags needed to use the brew version of OpenSSL
 # https://github.com/phusion/passenger/issues/1630#issuecomment-147527656
 export EXTRA_LDFLAGS="-L/usr/local/opt/openssl/lib"
@@ -126,18 +135,42 @@ export BBM_PROD="Bought By Many (Prod)"
 # Set AWS Profile for some Sceptre updates
 export CROSS_ACCOUNT_STACK_AWS_PROFILE_NAME_BBM_MASTER=bbm-master-full-access
 
-# Colourise the terminal when using the deployment profile
-# From https://gist.github.com/pablete/5871811
-function set_iterm_profile() {
-  NAME=$1; if [ -z "$NAME" ]; then NAME="Default"; fi # if you have trouble with this, change
-                                                      # "Default" to the name of your default theme
-  echo -e "\033]50;SetProfile=$NAME\a"
-}
-
-# Setup Ruby tooling
-# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 # heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=/Users/craig/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+#HEROKU_AC_ZSH_SETUP_PATH=/Users/craig/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
+
+## Aliases
+
+# Run stuff for the platform
+alias rboughtbymany="redis-server ~/redis.conf && pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start" 
+alias rmongo3="mongod --config ~/.mongo_3.conf" 
+alias rngrok="ngrok start --all"
+
+# Make it easier to fix when pdb goes wrong
+alias rr="reset && reset"
+
+# Make generating new uuids easier
+alias uuid="python -c \"import uuid; print(uuid.uuid4())\""
+
+# General helper
+alias cdb="cd ~/src/boughtbymany"
+alias ttox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" tox"
+alias ptox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" PIPENV_DONT_LOAD_ENV=TRUE pipenv run tox"
+alias wlt="AWS_DEFAULT_PROFILE=bbm-dev wrench logs tail --format servicekit"
+alias wdt="wrench deploy trantor"
+alias wt="wrench trantor"
+alias wtl="wrench trantor lambda"
+alias wtld="wrench trantor latest_deploys"
+alias wtgs="wrench trantor get_squad"
+alias pri="pipenv run ipython"
+alias prdi="pipenv install --dev --python `which python3.6` && pipenv run pre-commit install && pipenv run pre-commit run"
+alias prun="pipenv run python run.py"
+alias rmpipcache="rm -r ~/Library/Caches/pip*"
+alias suc="cd ~/src/boughtbymany/swagger-ui-cimpress && nvm use 7.7.4 && yarn run serve"
+alias deployment="export AWS_DEFAULT_PROFILE=deployment && echo -e "\033]50;SetProfile=deployment\a""
+alias undeployment="unset AWS_DEFAULT_PROFILE && echo -e "\033]50;SetProfile=\a""
+
+alias trantor_dev="export TRANTOR_API_URL=https://trantor-dev.boughtbymany.com && export TRANTOR_PROFILE=trantor-dev && export CODE_BUCKET=code-bucket-trantor-dev"
+alias untrantor_dev="unset TRANTOR_API_URL && unset TRANTOR_PROFILE && unset CODE_BUCKET"
+alias now="date -u +\"%Y-%m-%dT%H:%M:%SZ\""
 

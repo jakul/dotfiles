@@ -1,0 +1,14 @@
+sandbox_init_nvm(){
+  source $(brew --prefix nvm)/nvm.sh #long running setup command
+}
+
+# create hooks for commands 'nvm', 'node' and 'nodemon'
+sandbox_hook nvm node
+sandbox_hook nvm nodemon
+# this one not needed: it's created automatically based on the sandbox name
+# sandbox_hook nvm nvm
+
+
+sandbox_init_pyenv(){
+  eval "$(pyenv init -)" 
+}

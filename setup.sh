@@ -18,6 +18,8 @@ SYMLINKS=(
     ".vimrc"
     ".zshrc"
     ".zsh_aliases"
+    ".sandboxd"
+    ".sandboxrc"
 )
 COPY=(
     ".gitconfig"
