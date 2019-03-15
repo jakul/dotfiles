@@ -67,8 +67,8 @@ plugins=(git zsh-completions)
 
 source $ZSH/oh-my-zsh.sh
 
+# Speed up compinit
 # https://gist.github.com/ctechols/ca1035271ad134841284#gistcomment-2788113
-
 # Perform compinit only once a day.
 autoload -Uz compinit
 
@@ -138,6 +138,8 @@ export CROSS_ACCOUNT_STACK_AWS_PROFILE_NAME_BBM_MASTER=bbm-master-full-access
 # heroku autocomplete setup
 #HEROKU_AC_ZSH_SETUP_PATH=/Users/craig/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
+# Show the AWS profile name in the powerline
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time aws)
 
 ## Aliases
 
@@ -165,6 +167,7 @@ alias wtgs="wrench trantor get_squad"
 alias pri="pipenv run ipython"
 alias prdi="pipenv install --dev --python `which python3.6` && pipenv run pre-commit install && pipenv run pre-commit run"
 alias prun="pipenv run python run.py"
+alias plid="pipenv lock && pipenv install --dev" 
 alias rmpipcache="rm -r ~/Library/Caches/pip*"
 alias suc="cd ~/src/boughtbymany/swagger-ui-cimpress && nvm use 7.7.4 && yarn run serve"
 alias deployment="export AWS_DEFAULT_PROFILE=deployment && echo -e "\033]50;SetProfile=deployment\a""
