@@ -63,36 +63,81 @@ HIST_STAMPS="dd/mm/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-completions)
+#autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# Load aliases
+[[ -s "$HOME/.zsh_aliases" ]] && source "$HOME/.zsh_aliases"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export PATH=/$HOME/.yarn/bin:/Users/craig/.local/bin:/Users/craig/.pyenv/shims:/usr/local/opt/openssl/bin:/usr/local/bin:$PATH
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+# Setup Python tooling
+export PYENV_VERSION=system:3.7.1:3.6.7
+export VIRTUALENVWRAPPER_PYTHON=`which python3`
+export VIRTUALENVWRAPPER_HOOK_DIR=~/.virtualenvhooks
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+source /usr/local/bin/virtualenvwrapper_lazy.sh
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# Enable bash completion for pipenv
+# eval "$(pipenv --completion)"
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+# Let Pipenv use Pyenv
+eval "$(pyenv init -)"
+export PYENV_SHELL=zsh
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Make Flask debugging easier
+export WERKZEUG_DEBUG_PIN=off
+
+# Allow ipdb inside of pytest
+#export PYTEST_ADDOPTS="--capture=no"
+export PYTEST_ADDOPTS="--capture=no --pdbcls=IPython.terminal.debugger:Pdb -W ignore:\"The \`color_scheme\` argument is deprecated since version 5.1\" "
+export TOX_PLUGINS_IPDB_INSTALL=1
+
+
+# Setup Node tooling
+# Setup nvm
+export NVM_DIR="$HOME/.nvm"
+. /usr/local/opt/nvm/nvm.sh --no-use
+
+# System setup
+[[ -s "$HOME/.bash_credentials" ]] && source "$HOME/.bash_credentials"
+# Set the flags needed to use the brew version of OpenSSL
+# https://github.com/phusion/passenger/issues/1630#issuecomment-147527656
+export EXTRA_LDFLAGS="-L/usr/local/opt/openssl/lib"
+export EXTRA_CFLAGS="-I/usr/local/opt/openssl/include" 
+# http://stackoverflow.com/a/40206994/691427
+export LDFLAGS="-L/usr/local/opt/openssl/lib -I/usr/local/lib"
+export CFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/include"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="-/usr/local/opt/openssl/lib/pkgconfig"
+export LC_ALL=en_GB.UTF-8
+export LANG=en_GB.UTF-8
+
+# Wrench tooling
+export BBM_DEV="BBM Dev"
+export BBM_PROD="Bought By Many (Prod)"
+
+# Set AWS Profile for some Sceptre updates
+export CROSS_ACCOUNT_STACK_AWS_PROFILE_NAME_BBM_MASTER=bbm-master-full-access
+
+# Colourise the terminal when using the deployment profile
+# From https://gist.github.com/pablete/5871811
+function set_iterm_profile() {
+  NAME=$1; if [ -z "$NAME" ]; then NAME="Default"; fi # if you have trouble with this, change
+                                                      # "Default" to the name of your default theme
+  echo -e "\033]50;SetProfile=$NAME\a"
+}
+
+# Setup Ruby tooling
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# heroku autocomplete setup
+HEROKU_AC_ZSH_SETUP_PATH=/Users/craig/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+
 
