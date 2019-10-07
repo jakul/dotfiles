@@ -88,7 +88,7 @@ compinit -C
 # User configuration
 
 # Load aliases
-export PATH=/usr/local/opt/python/libexec/bin:HOME/.yarn/bin:/Users/craig/.local/bin:/Users/craig/.pyenv/shims:/usr/local/opt/openssl/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/opt/python/libexec/bin:HOME/.yarn/bin:/Users/craig/.local/bin:/Users/craig/.pyenv/shims:/usr/local/opt/openssl/bin:/usr/local/bin:/Users/craig/Library/Python/3.7/bin:$PATH
 
 # Setup Python tooling
 export PYENV_VERSION=system:3.7.1:3.6.7
