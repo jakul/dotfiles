@@ -53,7 +53,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-HIST_STAMPS="dd/mm/yyyy"
+HIST_STAMPS="%d/%m/%Y"
+HIST_STAMPS="%F"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -87,7 +88,7 @@ compinit -C
 # User configuration
 
 # Load aliases
-export PATH=/$HOME/.yarn/bin:/Users/craig/.local/bin:/Users/craig/.pyenv/shims:/usr/local/opt/openssl/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/opt/python/libexec/bin:HOME/.yarn/bin:/Users/craig/.local/bin:/Users/craig/.pyenv/shims:/usr/local/opt/openssl/bin:/usr/local/bin:$PATH
 
 # Setup Python tooling
 export PYENV_VERSION=system:3.7.1:3.6.7
@@ -136,10 +137,15 @@ export BBM_PROD="Bought By Many (Prod)"
 export CROSS_ACCOUNT_STACK_AWS_PROFILE_NAME_BBM_MASTER=bbm-master-full-access
 
 # heroku autocomplete setup
-#HEROKU_AC_ZSH_SETUP_PATH=/Users/craig/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
+# HEROKU_AC_ZSH_SETUP_PATH=/Users/craig/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
-# Show the AWS profile name in the powerline
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time aws)
+# Hide the history indicator, becuase it's wrong 
+export POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
+
+# Hide default username
+export DEFAULT_USER="craig"
+
+
 
 ## Aliases
 
@@ -156,14 +162,13 @@ alias uuid="python -c \"import uuid; print(uuid.uuid4())\""
 
 # General helper
 alias cdb="cd ~/src/boughtbymany"
-alias ttox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" tox"
-alias ptox="MONGO_URI=\"mongodb://localhost/test?ssl=true&ssl_cert_reqs=CERT_NONE\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" PIPENV_DONT_LOAD_ENV=TRUE pipenv run tox"
+alias ttox="MONGO_URI=\"mongodb://localhost/test?ssl=true&tlsAllowInvalidCertificates=true\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" tox"
+alias ptox="MONGO_URI=\"mongodb://localhost/test?ssl=true&tlsAllowInvalidCertificates=true\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" PIPENV_DONT_LOAD_ENV=TRUE pipenv run tox"
 alias wlt="AWS_DEFAULT_PROFILE=bbm-dev wrench logs tail --format servicekit"
 alias wdt="wrench deploy trantor"
 alias wt="wrench trantor"
 alias wtl="wrench trantor lambda"
 alias wtld="wrench trantor latest_deploys"
-alias wtgs="wrench trantor get_squad"
 alias pri="pipenv run ipython"
 alias prdi="pipenv install --dev --python `which python3.6` && pipenv run pre-commit install && pipenv run pre-commit run"
 alias prun="pipenv run python run.py"
@@ -172,8 +177,11 @@ alias rmpipcache="rm -r ~/Library/Caches/pip*"
 alias suc="cd ~/src/boughtbymany/swagger-ui-cimpress && nvm use 7.7.4 && yarn run serve"
 alias deployment="export AWS_DEFAULT_PROFILE=deployment && echo -e "\033]50;SetProfile=deployment\a""
 alias undeployment="unset AWS_DEFAULT_PROFILE && echo -e "\033]50;SetProfile=\a""
-
 alias trantor_dev="export TRANTOR_API_URL=https://trantor-dev.boughtbymany.com && export TRANTOR_PROFILE=trantor-dev && export CODE_BUCKET=code-bucket-trantor-dev"
 alias untrantor_dev="unset TRANTOR_API_URL && unset TRANTOR_PROFILE && unset CODE_BUCKET"
 alias now="date -u +\"%Y-%m-%dT%H:%M:%SZ\""
+alias ww="~/src/boughtbymany/wrench && pipenv shell"
 
+wtgs() {
+  wrench trantor get_squad "$@" | fx .
+}
