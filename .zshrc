@@ -38,7 +38,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
-CORRECT_IGNORE_FILE="squads"
+CORRECT_IGNORE_FILE="schema"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -89,10 +89,11 @@ compinit -C
 # User configuration
 
 # Load aliases
+
 export PATH=/usr/local/opt/python/libexec/bin:HOME/.yarn/bin:/Users/craig/.local/bin:/Users/craig/.pyenv/shims:/usr/local/opt/openssl/bin:/usr/local/bin:/Users/craig/Library/Python/3.6/bin:$PATH
 
 # Setup Python tooling
-export PYENV_VERSION=system:3.7.1:3.6.8
+export PYENV_VERSION=system:3.9.7
 export VIRTUALENVWRAPPER_PYTHON=`which python3`
 export VIRTUALENVWRAPPER_HOOK_DIR=~/.virtualenvhooks
 export WORKON_HOME=$HOME/.virtualenvs
@@ -130,13 +131,6 @@ export PKG_CONFIG_PATH="-/usr/local/opt/openssl/lib/pkgconfig"
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
-# Wrench tooling
-export BBM_DEV="BBM Dev"
-export BBM_PROD="Bought By Many (Prod)"
-
-# Set AWS Profile for some Sceptre updates
-export CROSS_ACCOUNT_STACK_AWS_PROFILE_NAME_BBM_MASTER=bbm-master-full-access
-
 # heroku autocomplete setup
 # HEROKU_AC_ZSH_SETUP_PATH=/Users/craig/Library/Caches/heroku/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
 
@@ -150,11 +144,6 @@ export DEFAULT_USER="craig"
 
 ## Aliases
 
-# Run stuff for the platform
-alias rboughtbymany="redis-server ~/redis.conf && pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start"
-alias rmongo3="mongod --config ~/.mongo_3.conf"
-alias rngrok="ngrok start --all"
-
 # Make it easier to fix when pdb goes wrong
 alias rr="reset && reset"
 
@@ -163,47 +152,23 @@ alias uuid="python -c \"import uuid; print(uuid.uuid4())\""
 alias shortid="python -c \"import shortuuid; print(shortuuid.uuid())\""
 
 # General helper
-alias cdb="cd ~/src/boughtbymany"
-alias ttox="MONGO_URI=\"mongodb://localhost/test\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" tox"
-alias ptox="MONGO_URI=\"mongodb://localhost/test\" TOX_TESTENV_PASSENV=\"PYTEST_ADDOPTS\" PIPENV_DONT_LOAD_ENV=TRUE pipenv run tox"
-alias ptoxp="ptox -p"
-alias wlt="AWS_DEFAULT_PROFILE=bbm-dev wrench logs tail --format servicekit"
-alias wdt="echo 'Use tlsc instead!'"
-alias tlsc="trantor lambda set code"
-alias tsd="trantor squad deploy"
-alias tdl="trantor deploy list"
-alias pri="pipenv run ipython"
-alias prdi="pipenv install --dev --python `which python3.6` && pipenv run pre-commit install && pipenv run pre-commit run"
-alias prun="pipenv run python run.py"
-alias plid="pipenv lock && pipenv install --dev"
-alias pserve="pipenv run serve"
-alias plint="pipenv run lint"
-alias ppytest="PIPENV_DONT_LOAD_ENV=1 pipenv run pytest"
-alias pintegration="PIPENV_DONT_LOAD_ENV=1 pipenv run integration"
 alias rmpipcache="rm -r ~/Library/Caches/pip*"
-alias suc="cd ~/src/boughtbymany/swagger-ui-cimpress && nvm use 7.7.4 && yarn run serve"
-alias deployment="export AWS_DEFAULT_PROFILE=deployment && echo -e "\033]50;SetProfile=deployment\a""
-alias undeployment="unset AWS_DEFAULT_PROFILE && echo -e "\033]50;SetProfile=\a""
-alias trantor_dev="export TRANTOR_API_URL=https://trantor-dev.boughtbymany.com && export TRANTOR_PROFILE=trantor-dev && export CODE_BUCKET=code-bucket-trantor-dev && AWS_DEFAULT_PROFILE=trantor-dev && export POWERLEVEL9K_COLOR_SCHEME='light' && source /Users/craig/.oh-my-zsh/oh-my-zsh.sh && export TRANTOR_AUTH0_AUDIENCE=trantor-dev.policies.io"
-alias untrantor_dev="unset TRANTOR_API_URL && unset TRANTOR_PROFILE && unset CODE_BUCKET && unset TRANTOR_AUTH0_AUDIENCE"
 alias now="date -u +\"%Y-%m-%dT%H:%M:%SZ\""
-alias ww="~/src/boughtbymany/wrench && pipenv shell"
 alias restart_diacritical_keyboard="defaults write -g ApplePressAndHoldEnabled -bool true"
-wtgs() {
-  wrench trantor get_squad "$@" | fx .
-}
-alias wtls="wrench trantor list_squads"
-alias ts="trantor squad"
-alias tsg="trantor squad get"
 
 # Pipenv 2020.6.2 started showing this message everywhere
 export PIPENV_IGNORE_VIRTUALENVS=1
 export PIPENV_CACHE_DIR=~/.cache/pipenv
 
-export TRANTOR_AUTH_METHOD=Auth0 
+# Prevent pipenv from loading env vars which break local test runs
+export PIPENV_DONT_LOAD_ENV=1
 
 # Fuzzy finding
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Workaround cryptography error from aws_encryption_sdk
 export PYTHONWARNINGS="ignore:int_from_bytes is deprecated"
+
+# Enable direnv https://direnv.net/
+eval "$(direnv hook zsh)"
+
